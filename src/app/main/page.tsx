@@ -1,14 +1,14 @@
 import React from "react";
-import RegisterPage from "./_components/RegisterPage";
+import TestPage from "./_components/TestPage";
 import Navbar from "../components/Navbar";
 
-const page = () => {
+const MainPage = () => {
   return (
     <>
       <Navbar />
-      <RegisterPage />
+      <TestPage />
     </>
   );
 };
 
-export default page;
+export default MainPage;

@@ -23,16 +23,18 @@ const LoginPage = () => {
         }
       );
 
-      console.log("loginResponse:", response);
-      console.log("loginData:", data);
-
       if (!response.ok) {
         console.error("로그인 실패:", response.status);
         return;
       }
 
+      const { accessToken, refreshToken } = await response.json();
+
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", refreshToken);
+
       console.log("로그인 성공");
-      route.push("/home");
+      route.push("/");
     } catch (error) {
       console.error("회원가입 중 오류 발생:", error);
     }
