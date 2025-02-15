@@ -1,12 +1,12 @@
 import React from "react";
-import TestPage from "./_components/TestPage";
 import Navbar from "../components/Navbar";
+import Post from "./_components/Post";
 
 const MainPage = () => {
   return (
     <>
       <Navbar />
-      <TestPage />
+      <Post />
     </>
   );
 };

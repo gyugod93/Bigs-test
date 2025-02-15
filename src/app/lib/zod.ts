@@ -25,5 +25,12 @@ export const LoginSchema = z.object({
   password: passwordSchema,
 });
 
+export const PostSchema = z.object({
+  title: z.string().min(1, "제목을 입력하세요"),
+  content: z.string().min(1, "내용을 입력하세요"),
+  category: z.string().min(1, "카테고리를 선택하세요"),
+});
+
 export type RegisterType = z.infer<typeof RegisterSchema>;
 export type LoginType = z.infer<typeof LoginSchema>;
+export type PostType = z.infer<typeof PostSchema>;

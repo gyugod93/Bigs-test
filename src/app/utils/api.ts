@@ -16,6 +16,9 @@ export const fetchWithToken = async (
     if (response.status === 401) {
       const refreshToken = localStorage.getItem("refresh_token");
       if (!refreshToken) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        window.location.href = "/login";
         throw new Error("로그인이 필요합니다");
       }
 
@@ -32,6 +35,7 @@ export const fetchWithToken = async (
         // 리프레시 토큰도 만료된 경우
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
+        window.location.href = "/login";
         throw new Error("다시 로그인해주세요.");
       }
 
