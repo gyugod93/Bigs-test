@@ -1,4 +1,4 @@
-import { LoginType } from "@/app/lib/zod";
+import { LoginType } from "@/app/utils/validations/schemas";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

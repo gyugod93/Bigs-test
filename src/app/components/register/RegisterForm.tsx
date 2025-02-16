@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   Button,
   ErrorAlert,
+  SuccessAlert, // SuccessAlert 추가
   Title,
 } from "@/app/components/common/CommonStyles";
 

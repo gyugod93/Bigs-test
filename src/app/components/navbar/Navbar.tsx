@@ -9,8 +9,6 @@ import {
   LeftSection,
   RightSection,
   UserInfo,
-  LogoutButton,
-  BackButton,
 } from "./Navbar.styles";
 import { Button } from "../common/CommonStyles";
 
