@@ -10,7 +10,7 @@ import PostCreate from "./components/post/create/PostCreate";
 const HomePage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const { categories, fetchCategories } = useCategories();
+  const { fetchCategories } = useCategories();
   const { posts, addPost, fetchPosts, handleSelectPost } = usePosts();
 
   useEffect(() => {
@@ -32,8 +32,6 @@ const HomePage = () => {
       }
     };
     initializeData();
-    // fetchCategories();
-    // fetchPosts();
   }, []);
 
   if (isLoading) {

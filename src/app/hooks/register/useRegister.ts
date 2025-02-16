@@ -72,6 +72,7 @@ export const useRegister = () => {
         router.push("/login");
       }, 1000);
     } catch (error) {
+      console.error("회원가입 오류:", error);
       setError("서버와의 통신 중 오류가 발생했습니다");
     } finally {
       setIsLoading(false);
