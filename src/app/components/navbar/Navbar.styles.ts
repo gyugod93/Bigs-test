@@ -39,29 +39,3 @@ export const UserInfo = styled.div`
     font-size: 0.875rem;
   }
 `;
-
-export const LogoutButton = styled.button`
-  padding: 0.5rem 1rem;
-  background-color: #dc2626;
-  color: white;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #b91c1c;
-  }
-`;
-
-export const BackButton = styled.button`
-  padding: 0.5rem 1rem;
-  background-color: #4b5563;
-  color: white;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #374151;
-  }
-`;
