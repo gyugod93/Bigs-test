@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { fetchWithToken } from "@/app/utils/auth/api";
+import { authClient } from "@/app/utils/auth/authClient ";
 import { Category } from "@/app/types/post";
 
 export const useCategories = () => {
@@ -8,7 +8,7 @@ export const useCategories = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetchWithToken(
+      const response = await authClient(
         "https://front-mission.bigs.or.kr/boards/categories"
       );
       if (!response.ok) {

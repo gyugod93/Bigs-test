@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { fetchWithToken } from "@/app/utils/auth/api";
+import { authClient } from "@/app/utils/auth/authClient ";
 
 // 카테고리 옵션
 const categories = ["NOTICE", "QNA", "ETC", "FREE"];
@@ -42,7 +42,7 @@ const PostEdit: React.FC<PostEditProps> = ({ post, onCancel, onSuccess }) => {
         new Blob([JSON.stringify(requestData)], { type: "application/json" })
       );
 
-      const response = await fetchWithToken(
+      const response = await authClient(
         `https://front-mission.bigs.or.kr/boards/${post.id}`,
         {
           method: "PATCH",

@@ -1,7 +1,7 @@
 "use client";
 import { PostType } from "@/app/lib/zod";
 import { PostProps } from "@/app/types/post";
-import { fetchWithToken } from "@/app/utils/auth/api";
+import { authClient } from "@/app/utils/auth/authClient ";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostSchema } from "@/app/lib/zod";
@@ -26,7 +26,7 @@ export const useCreatePost = (onAddPost: (post: PostProps) => void) => {
         new Blob([JSON.stringify(requestData)], { type: "application/json" })
       );
 
-      const response = await fetchWithToken(
+      const response = await authClient(
         "https://front-mission.bigs.or.kr/boards",
         {
           method: "POST",

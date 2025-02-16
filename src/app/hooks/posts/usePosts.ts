@@ -1,6 +1,6 @@
 "use client";
 import { usePostStore } from "@/app/store/usePostStore";
-import { fetchWithToken } from "@/app/utils/auth/api";
+import { authClient } from "@/app/utils/auth/authClient ";
 import { useRouter } from "next/navigation";
 
 export const usePosts = () => {
@@ -9,7 +9,7 @@ export const usePosts = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetchWithToken(
+      const response = await authClient(
         "https://front-mission.bigs.or.kr/boards?page=0&size=10"
       );
       if (!response.ok) {

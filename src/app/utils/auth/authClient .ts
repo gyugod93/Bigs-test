@@ -1,6 +1,7 @@
-// 토큰 관리/갱신 로직
+// app/utils/auth/authClient.ts
 "use client";
-export const refreshToken = async () => {
+
+export const refreshAuthToken = async () => {
   const refreshToken = localStorage.getItem("refresh_token");
 
   if (!refreshToken) {
@@ -34,6 +35,35 @@ export const refreshToken = async () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     window.location.href = "/login";
+    throw error;
+  }
+};
+
+export const authClient = async (url: string, options: RequestInit = {}) => {
+  const accessToken = localStorage.getItem("access_token");
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (response.status === 401) {
+      const newToken = await refreshAuthToken();
+      return fetch(url, {
+        ...options,
+        headers: {
+          ...options.headers,
+          Authorization: `Bearer ${newToken}`,
+        },
+      });
+    }
+
+    return response;
+  } catch (error) {
     throw error;
   }
 };
