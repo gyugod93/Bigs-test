@@ -2,9 +2,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { fetchWithToken } from "@/app/utils/api";
 import PostList from "./_components/PostList";
-import PostCreate from "./_components/PostCreate";
 import { useRouter } from "next/navigation";
 import { usePostStore } from "../store/usePostStore";
+import PostCreate from "./_components/PostCreate";
 
 interface Category {
   id: string;

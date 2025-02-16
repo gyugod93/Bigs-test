@@ -10,68 +10,88 @@ const LoginPage = () => {
     resolver: zodResolver(LoginSchema),
     mode: "onChange",
   });
-  const route = useRouter();
+  const router = useRouter();
 
   const handleLogin = async (data: LoginType) => {
     try {
-      const response = await fetch(
-        "https://front-mission.bigs.or.kr/auth/signin",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
+      // 내부 API 라우트 호출
+      const response = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
-        const errorText = await response.text(); // 에러 응답의 상세 내용 확인
-        console.error("로그인 실패:", response.status, errorText);
+        const error = await response.json();
+        console.error("로그인 실패:", error);
         return;
       }
 
       const { accessToken, refreshToken } = await response.json();
 
+      // 토큰 저장
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
 
       console.log("로그인 성공");
-      route.push("/");
+      router.push("/");
     } catch (error) {
-      console.error("회원가입 중 오류 발생:", error);
+      console.error("로그인 중 오류 발생:", error);
     }
   };
 
   const goToRegisterPage = () => {
-    route.push("/register");
+    router.push("/register");
   };
 
   return (
-    <div>
-      <h1>로그인 페이지</h1>
-      <form onSubmit={form.handleSubmit(handleLogin)}>
-        <input
-          {...form.register("username")}
-          type="email"
-          placeholder="이메일"
-        />
-        {form.formState.errors.username && (
-          <p className="text-red-500 text-sm">
-            {form.formState.errors.username.message}
-          </p>
-        )}
-        <input
-          {...form.register("password")}
-          type="password"
-          placeholder="비밀번호"
-        />
-        {form.formState.errors.password && (
-          <p className="text-red-500 text-sm">
-            {form.formState.errors.password.message}
-          </p>
-        )}
-        <button type="submit">가입</button>
-        <button onClick={goToRegisterPage}>회원가입</button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
+        <h1 className="text-2xl font-bold text-center">로그인</h1>
+        <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-6">
+          <div>
+            <input
+              {...form.register("username")}
+              type="email"
+              placeholder="이메일"
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            {form.formState.errors.username && (
+              <p className="text-red-500 text-sm mt-1">
+                {form.formState.errors.username.message}
+              </p>
+            )}
+          </div>
+          <div>
+            <input
+              {...form.register("password")}
+              type="password"
+              placeholder="비밀번호"
+              className="w-full px-3 py-2 border rounded-md"
+            />
+            {form.formState.errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {form.formState.errors.password.message}
+              </p>
+            )}
+          </div>
+          <div className="flex gap-4">
+            <button
+              type="submit"
+              className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
+              로그인
+            </button>
+            <button
+              type="button"
+              onClick={goToRegisterPage}
+              className="w-full py-2 px-4 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+            >
+              회원가입
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
