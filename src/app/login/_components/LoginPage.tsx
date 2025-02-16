@@ -24,7 +24,8 @@ const LoginPage = () => {
       );
 
       if (!response.ok) {
-        console.error("로그인 실패:", response.status);
+        const errorText = await response.text(); // 에러 응답의 상세 내용 확인
+        console.error("로그인 실패:", response.status, errorText);
         return;
       }
 

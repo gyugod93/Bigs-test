@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import MainPage from "./main/page";
+import Navbar from "./components/Navbar";
+import MainPage from "./post/page";
 
 const page = () => {
   const router = useRouter();
@@ -21,7 +22,12 @@ const page = () => {
     return <div>Loading...</div>;
   }
 
-  return <MainPage />;
+  return (
+    <>
+      <Navbar />
+      <MainPage />
+    </>
+  );
 };
 
 export default page;

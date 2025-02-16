@@ -14,6 +14,7 @@ const Navbar = () => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       const decodedToken = decodeJWT(accessToken);
+      console.log("디코딩JWT 체크", decodedToken);
       setUserInfo(decodedToken);
     }
   }, []);
