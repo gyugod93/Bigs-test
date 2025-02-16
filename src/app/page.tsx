@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
 import { useRouter } from "next/navigation";
 import { usePosts } from "./hooks/posts/usePosts";
-import PostCreate from "./components/post/PostCreate";
-import PostListSection from "./components/post/PostListSection";
+import PostListSection from "./components/post/list/PostListSection";
 import { useCategories } from "./hooks/posts/useCategories";
+import Navbar from "./components/navbar/Navbar";
+import PostCreate from "./components/post/create/PostCreate";
 
 const HomePage = () => {
   const router = useRouter();
@@ -45,7 +45,6 @@ const HomePage = () => {
       <Navbar />
       <div className="p-4">
         <PostCreate onAddPost={addPost} />
-        <h1 className="text-2xl font-bold mb-4">게시판</h1>
         <PostListSection posts={posts} onSelectPost={handleSelectPost} />
       </div>
     </>

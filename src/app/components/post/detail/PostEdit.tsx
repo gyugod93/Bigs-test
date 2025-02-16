@@ -1,12 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import { authClient } from "@/app/utils/auth/authClient ";
 import { CATEGORIES, CATEGORY_MAP } from "@/app/types/post/postTypes";
+import { EditForm, Label, ButtonContainer } from "./PostEdit.styles";
+import {
+  Input,
+  TextArea,
+  Select,
+  Button,
+  InputGroup,
+} from "@/app/components/common/CommonStyles";
+import { authClient } from "@/app/utils/auth/authClient ";
 
-// 카테고리 옵션
-const categories = ["NOTICE", "QNA", "ETC", "FREE"];
-
-// 타입 정의
 export type PostEditProps = {
   post: {
     id: number;
@@ -30,13 +34,7 @@ const PostEdit = ({ post, onCancel, onSuccess }: PostEditProps) => {
 
     try {
       const formData = new FormData();
-
-      // JSON 요청 생성
-      const requestData = {
-        title,
-        content,
-        category,
-      };
+      const requestData = { title, content, category };
 
       formData.append(
         "request",
@@ -66,55 +64,37 @@ const PostEdit = ({ post, onCancel, onSuccess }: PostEditProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
-        >
-          제목
-        </label>
-        <input
+    <EditForm onSubmit={handleSubmit}>
+      <InputGroup>
+        <Label htmlFor="title">제목</Label>
+        <Input
           type="text"
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
           required
           disabled={isSubmitting}
         />
-      </div>
+      </InputGroup>
 
-      <div>
-        <label
-          htmlFor="content"
-          className="block text-sm font-medium text-gray-700"
-        >
-          내용
-        </label>
-        <textarea
+      <InputGroup>
+        <Label htmlFor="content">내용</Label>
+        <TextArea
           id="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={10}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
           required
           disabled={isSubmitting}
         />
-      </div>
+      </InputGroup>
 
-      <div>
-        <label
-          htmlFor="category"
-          className="block text-sm font-medium text-gray-700"
-        >
-          카테고리
-        </label>
-        <select
+      <InputGroup>
+        <Label htmlFor="category">카테고리</Label>
+        <Select
           id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
           required
           disabled={isSubmitting}
         >
@@ -123,27 +103,23 @@ const PostEdit = ({ post, onCancel, onSuccess }: PostEditProps) => {
               {CATEGORY_MAP[cat]}
             </option>
           ))}
-        </select>
-      </div>
+        </Select>
+      </InputGroup>
 
-      <div className="flex space-x-2">
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
-          disabled={isSubmitting}
-        >
+      <ButtonContainer>
+        <Button type="submit" disabled={isSubmitting} variant="primary">
           {isSubmitting ? "저장 중..." : "저장"}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50"
           disabled={isSubmitting}
+          variant="secondary"
         >
           취소
-        </button>
-      </div>
-    </form>
+        </Button>
+      </ButtonContainer>
+    </EditForm>
   );
 };
 

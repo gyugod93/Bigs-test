@@ -1,14 +1,9 @@
-import React from "react";
-import RegisterPage from "./_components/RegisterPage";
-import Navbar from "../components/Navbar";
+"use client";
 
-const page = () => {
-  return (
-    <>
-      <Navbar />
-      <RegisterPage />
-    </>
-  );
+import { RegisterForm } from "../components/register/RegisterForm";
+
+const RegisterPage = () => {
+  return <RegisterForm />;
 };
 
-export default page;
+export default RegisterPage;

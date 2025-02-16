@@ -1,5 +1,5 @@
 // app/api/auth/register/route.ts
-import { RegisterType } from "@/app/lib/zod";
+import { RegisterType } from "@/app/utils/validations/schemas";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

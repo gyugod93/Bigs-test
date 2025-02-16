@@ -30,6 +30,9 @@ export interface PostEditProps {
 
 export interface PostDetailViewProps {
   post: PostProps;
+  isLoggedIn: boolean;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
 // Store 관련 타입들

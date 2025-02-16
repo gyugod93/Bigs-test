@@ -6,6 +6,13 @@ import {
   CATEGORY_MAP,
   PostListSectionProps,
 } from "@/app/types/post/postTypes";
+import {
+  SectionContainer,
+  SectionTitle,
+  FilterContainer,
+  Label,
+  Select,
+} from "./PostListSection.styles";
 
 const PostListSection = ({ posts, onSelectPost }: PostListSectionProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -20,17 +27,14 @@ const PostListSection = ({ posts, onSelectPost }: PostListSectionProps) => {
     : posts;
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mt-6 mb-2">게시글 목록</h2>
-      <div className="mb-4">
-        <label htmlFor="category" className="mr-2 font-medium">
-          카테고리:
-        </label>
-        <select
+    <SectionContainer>
+      <SectionTitle>게시글 목록</SectionTitle>
+      <FilterContainer>
+        <Label htmlFor="category">카테고리:</Label>
+        <Select
           id="category"
           value={selectedCategory ?? ""}
           onChange={handleCategoryChange}
-          className="border rounded p-1"
         >
           <option value="">전체</option>
           {CATEGORIES.map((category) => (
@@ -38,11 +42,10 @@ const PostListSection = ({ posts, onSelectPost }: PostListSectionProps) => {
               {CATEGORY_MAP[category]}
             </option>
           ))}
-          ``
-        </select>
-      </div>
+        </Select>
+      </FilterContainer>
       <PostList posts={filteredPosts} onSelectPost={onSelectPost} />
-    </div>
+    </SectionContainer>
   );
 };
 
