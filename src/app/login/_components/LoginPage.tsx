@@ -14,22 +14,21 @@ const LoginPage = () => {
 
   const handleLogin = async (data: LoginType) => {
     try {
-      // 내부 API 라우트 호출
-      const response = await fetch("/api/auth", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
-        console.error("로그인 실패:", error);
+        console.error("로그인 실패:", result);
         return;
       }
 
-      const { accessToken, refreshToken } = await response.json();
+      const { accessToken, refreshToken } = result;
 
-      // 토큰 저장
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchWithToken } from "@/app/utils/api";
+import { fetchWithToken } from "@/app/utils/auth/api";
 import { useParams, useRouter } from "next/navigation";
 import { usePostStore } from "@/app/store/usePostStore";
 import PostEditForm from "../_components/PostEdit";

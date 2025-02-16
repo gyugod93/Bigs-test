@@ -1,4 +1,4 @@
-import { fetchWithToken } from "@/app/utils/api";
+import { fetchWithToken } from "@/app/utils/auth/api";
 import { PostType } from "@/app/lib/zod";
 import { PostProps } from "@/app/types/post";
 

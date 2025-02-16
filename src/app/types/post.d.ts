@@ -50,3 +50,16 @@ export type PostEditProps = {
   onCancel: () => void;
   onSuccess: () => void;
 };
+
+export interface Category {
+  id: string;
+  name: string;
+}
+
+export interface PostProps {
+  id: number;
+  title: string;
+  content: string;
+  category: string;
+  createdAt: string;
+}

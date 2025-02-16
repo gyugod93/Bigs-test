@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { fetchWithToken } from "@/app/utils/api";
+import { fetchWithToken } from "@/app/utils/auth/api";
 
 // 카테고리 옵션
 const categories = ["NOTICE", "QNA", "ETC", "FREE"];

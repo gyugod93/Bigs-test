@@ -1,32 +1,16 @@
 "use client";
 import React from "react";
-import { PostSchema, PostType } from "@/app/lib/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { PostType } from "@/app/lib/zod";
 import { PostCreateProps } from "@/app/types/post";
-import { createPost } from "@/app/api/posts/route";
+import { useCreatePost } from "@/app/hooks/posts";
 
 const categories = ["NOTICE", "QNA", "ETC", "FREE"];
 
 const PostCreate = ({ onAddPost }: PostCreateProps) => {
-  const form = useForm<PostType>({
-    resolver: zodResolver(PostSchema),
-    mode: "onChange",
-  });
+  const { form, createPost } = useCreatePost(onAddPost);
 
   const handlePost = async (data: PostType) => {
-    try {
-      const newPost = await createPost(data);
-      onAddPost(newPost);
-      alert("게시글이 등록되었습니다.");
-      form.reset();
-    } catch (error) {
-      alert(
-        error instanceof Error
-          ? error.message
-          : "게시글 등록 중 오류가 발생했습니다."
-      );
-    }
+    await createPost(data);
   };
 
   return (
