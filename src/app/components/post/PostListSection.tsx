@@ -1,24 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import PostList from "./PostList";
-import { PostProps } from "@/app/types/post";
+import {
+  CATEGORIES,
+  CATEGORY_MAP,
+  PostListSectionProps,
+} from "@/app/types/post/postTypes";
 
-interface Category {
-  id: string;
-  name: string;
-}
-
-interface PostListSectionProps {
-  posts: PostProps[];
-  categories: Category[];
-  onSelectPost: (postId: number) => void;
-}
-
-const PostListSection = ({
-  posts,
-  categories,
-  onSelectPost,
-}: PostListSectionProps) => {
+const PostListSection = ({ posts, onSelectPost }: PostListSectionProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -44,11 +33,12 @@ const PostListSection = ({
           className="border rounded p-1"
         >
           <option value="">전체</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
+          {CATEGORIES.map((category) => (
+            <option key={category} value={category}>
+              {CATEGORY_MAP[category]}
             </option>
           ))}
+          ``
         </select>
       </div>
       <PostList posts={filteredPosts} onSelectPost={onSelectPost} />

@@ -1,4 +1,3 @@
-// app/utils/auth/authClient.ts
 "use client";
 
 export const refreshAuthToken = async () => {
@@ -52,18 +51,39 @@ export const authClient = async (url: string, options: RequestInit = {}) => {
     });
 
     if (response.status === 401) {
-      const newToken = await refreshAuthToken();
-      return fetch(url, {
-        ...options,
-        headers: {
-          ...options.headers,
-          Authorization: `Bearer ${newToken}`,
-        },
-      });
+      try {
+        const newToken = await refreshAuthToken();
+        const refreshedResponse = await fetch(url, {
+          ...options,
+          headers: {
+            ...options.headers,
+            Authorization: `Bearer ${newToken}`,
+          },
+        });
+
+        if (refreshedResponse.status === 401) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          window.location.href = "/login";
+          throw new Error("토큰 재발급 후에도 인증 실패");
+        }
+
+        return refreshedResponse;
+      } catch (refreshError) {
+        console.error("토큰 재발급 실패:", refreshError);
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        window.location.href = "/login";
+        throw refreshError;
+      }
     }
 
     return response;
   } catch (error) {
+    console.error("authClient 요청 중 오류:", error);
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    window.location.href = "/login";
     throw error;
   }
 };

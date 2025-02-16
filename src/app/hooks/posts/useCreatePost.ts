@@ -1,10 +1,10 @@
 "use client";
 import { PostType } from "@/app/lib/zod";
-import { PostProps } from "@/app/types/post";
 import { authClient } from "@/app/utils/auth/authClient ";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostSchema } from "@/app/lib/zod";
+import { PostProps } from "@/app/types/post/postTypes";
 
 export const useCreatePost = (onAddPost: (post: PostProps) => void) => {
   const form = useForm<PostType>({

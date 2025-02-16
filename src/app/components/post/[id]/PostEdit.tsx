@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { authClient } from "@/app/utils/auth/authClient ";
+import { CATEGORIES, CATEGORY_MAP } from "@/app/types/post/postTypes";
 
 // 카테고리 옵션
 const categories = ["NOTICE", "QNA", "ETC", "FREE"];
@@ -17,7 +18,7 @@ export type PostEditProps = {
   onSuccess: () => void;
 };
 
-const PostEdit: React.FC<PostEditProps> = ({ post, onCancel, onSuccess }) => {
+const PostEdit = ({ post, onCancel, onSuccess }: PostEditProps) => {
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
   const [category, setCategory] = useState(post.category);
@@ -56,11 +57,9 @@ const PostEdit: React.FC<PostEditProps> = ({ post, onCancel, onSuccess }) => {
         throw new Error(`게시글 수정 실패: ${errorText}`);
       }
 
-      alert("게시글이 수정되었습니다.");
       onSuccess();
     } catch (error) {
       console.error("게시글 수정 실패:", error);
-      alert("수정 권한이 없거나 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
     }
@@ -119,9 +118,9 @@ const PostEdit: React.FC<PostEditProps> = ({ post, onCancel, onSuccess }) => {
           required
           disabled={isSubmitting}
         >
-          {categories.map((cat) => (
+          {CATEGORIES.map((cat) => (
             <option key={cat} value={cat}>
-              {cat}
+              {CATEGORY_MAP[cat]}
             </option>
           ))}
         </select>

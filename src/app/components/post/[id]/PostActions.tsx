@@ -1,11 +1,6 @@
 "use client";
+import { PostActionsProps } from "@/app/types/post/postTypes";
 import React from "react";
-
-interface PostActionsProps {
-  onEdit: () => void;
-  onDelete: () => void;
-  isLoggedIn: boolean;
-}
 
 const PostActions = ({ onEdit, onDelete, isLoggedIn }: PostActionsProps) => {
   if (!isLoggedIn) return null;

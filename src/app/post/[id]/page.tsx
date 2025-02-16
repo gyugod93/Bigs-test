@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import PostEditForm from "../_components/PostEdit";
-import PostDetailView from "./_components/PostDetailView";
-import PostActions from "./_components/PostActions";
-import { usePostDetail } from "./_hooks/usePostDetail";
-import { useEditMode } from "./_hooks/useEditMode";
+import PostDetailView from "../../components/post/[id]/PostDetailView";
+import PostActions from "../../components/post/[id]/PostActions";
+import { usePostDetail } from "../../hooks/posts/[id]/usePostDetail";
+import { useEditMode } from "../../hooks/posts/[id]/useEditMode";
+import PostEdit from "@/app/components/post/[id]/PostEdit";
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -14,9 +14,11 @@ const PostDetailPage = () => {
   const { isEditing, setIsEditing, handleEditSuccess } = useEditMode(() =>
     fetchPostDetail()
   );
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("access_token"));
+
     if (id) {
       fetchPostDetail();
     }
@@ -34,7 +36,7 @@ const PostDetailPage = () => {
       </button>
 
       {isEditing ? (
-        <PostEditForm
+        <PostEdit
           post={post}
           onCancel={() => setIsEditing(false)}
           onSuccess={handleEditSuccess}

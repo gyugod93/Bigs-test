@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
 import { PostType } from "@/app/lib/zod";
-import { PostCreateProps } from "@/app/types/post";
-import { useCreatePost } from "@/app/hooks/posts";
-
-const categories = ["NOTICE", "QNA", "ETC", "FREE"];
+import {
+  CATEGORIES,
+  CATEGORY_MAP,
+  PostCreateProps,
+} from "@/app/types/post/postTypes";
+import { useCreatePost } from "@/app/hooks/posts/useCreatePost";
 
 const PostCreate = ({ onAddPost }: PostCreateProps) => {
   const { form, createPost } = useCreatePost(onAddPost);
@@ -39,13 +41,13 @@ const PostCreate = ({ onAddPost }: PostCreateProps) => {
 
         <div>
           <label>카테고리</label>
-          <select {...form.register("category")}>
+          <select {...form.register("category")} defaultValue="">
             <option value="" disabled>
               카테고리 선택
             </option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
+            {CATEGORIES.map((categoryKey) => (
+              <option key={categoryKey} value={categoryKey}>
+                {CATEGORY_MAP[categoryKey]}
               </option>
             ))}
           </select>

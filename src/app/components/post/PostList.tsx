@@ -1,11 +1,10 @@
 "use client";
-import { PostProps } from "@/app/types/post";
+import {
+  CATEGORY_MAP,
+  CategoryKey,
+  PostListProps,
+} from "@/app/types/post/postTypes";
 import React from "react";
-
-interface PostListProps {
-  posts: PostProps[];
-  onSelectPost: (postId: number) => void;
-}
 
 const PostList = ({ posts, onSelectPost }: PostListProps) => {
   return (
@@ -17,7 +16,9 @@ const PostList = ({ posts, onSelectPost }: PostListProps) => {
           onClick={() => onSelectPost(post.id)}
         >
           <h3 className="text-lg font-semibold">{post.title}</h3>
-          <p className="text-gray-500">카테고리: {post.category}</p>
+          <p className="text-gray-500">
+            카테고리:{CATEGORY_MAP[post.category as CategoryKey]}
+          </p>
           <p className="text-gray-400 text-sm">
             작성일: {new Date(post.createdAt).toLocaleDateString()}
           </p>

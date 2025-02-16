@@ -1,14 +1,12 @@
 "use client";
+import { PostProps } from "@/app/types/post/postTypes";
 import { useState } from "react";
-import { usePostStore } from "@/app/store/usePostStore";
 import { authClient } from "@/app/utils/auth/authClient ";
-import { PostProps } from "@/app/types/post";
 import { useRouter } from "next/navigation";
 
 export const usePostDetail = (postId: string) => {
   const [post, setPost] = useState<PostProps | null>(null);
   const router = useRouter();
-  const getPostById = usePostStore((state) => state.getPostById);
 
   const fetchPostDetail = async () => {
     try {
@@ -17,11 +15,11 @@ export const usePostDetail = (postId: string) => {
       );
 
       if (!response.ok) {
+        console.error("게시글 상세 조회 실패:", response.status);
         throw new Error("게시글 상세 조회 실패");
       }
 
       const data = await response.json();
-      const storedPost = getPostById(Number(postId));
 
       const postData: PostProps = {
         ...data,
@@ -30,12 +28,16 @@ export const usePostDetail = (postId: string) => {
         content: data.content,
         category: data.boardCategory,
         createdAt: data.createdAt || new Date().toISOString(),
-        authorId: storedPost?.authorId,
       };
 
       setPost(postData);
     } catch (error) {
       console.error("게시글 상세 조회 실패:", error);
+
+      // 네트워크 오류 등으로 인한 리다이렉트
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      router.push("/login");
     }
   };
 
@@ -48,6 +50,16 @@ export const usePostDetail = (postId: string) => {
       );
 
       if (!response.ok) {
+        console.error("게시글 삭제 실패:", response.status);
+
+        // 401 에러 시 명시적 로그인 페이지 리다이렉트
+        if (response.status === 401) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          router.push("/login");
+          return;
+        }
+
         throw new Error("게시글 삭제 실패");
       }
 
@@ -55,7 +67,11 @@ export const usePostDetail = (postId: string) => {
       router.push("/");
     } catch (error) {
       console.error("게시글 삭제 실패:", error);
-      alert("삭제 권한이 없거나 오류가 발생했습니다.");
+
+      // 네트워크 오류 등으로 인한 리다이렉트
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      router.push("/login");
     }
   };
 

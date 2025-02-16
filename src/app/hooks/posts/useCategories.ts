@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { authClient } from "@/app/utils/auth/authClient ";
-import { Category } from "@/app/types/post";
+import { Category } from "@/app/types/post/postTypes";
 
 export const useCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);

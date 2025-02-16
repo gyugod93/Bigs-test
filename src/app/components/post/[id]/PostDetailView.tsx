@@ -1,10 +1,10 @@
 "use client";
-import { PostProps } from "@/app/types/post";
+import {
+  CATEGORY_MAP,
+  CategoryKey,
+  PostDetailViewProps,
+} from "@/app/types/post/postTypes";
 import React from "react";
-
-interface PostDetailViewProps {
-  post: PostProps;
-}
 
 const PostDetailView = ({ post }: PostDetailViewProps) => {
   return (
@@ -12,7 +12,7 @@ const PostDetailView = ({ post }: PostDetailViewProps) => {
       <h1 className="text-2xl font-bold mb-4">{post.title}</h1>
       <div className="my-4 whitespace-pre-wrap">{post.content}</div>
       <div className="text-sm text-gray-600">
-        <p>카테고리: {post.category}</p>
+        <p>카테고리: {CATEGORY_MAP[post.category as CategoryKey]}</p>
         <p>작성일: {new Date(post.createdAt).toLocaleDateString()}</p>
       </div>
     </div>
