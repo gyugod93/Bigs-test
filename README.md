@@ -108,11 +108,5 @@ NextJS / Styled-component / React-hook-form / Zod / Zustand / Typescript / Terse
   - 
 
 ## 구현 못한 부분
-  - 
-  - `TanStack Query useInfiniteQuery`를 이용한 **페이지네이션(무한스크롤)**
-  - `IntersectionObserver`를 사용하여 **스크롤 끝에 도달하면 다음 게시글 로드**
-  - `useMemo`와 `useCallback`을 이용한 **게시글 데이터 메모이제이션(성능 개선)**
-  - ShadCN/UI 모달창을 이용한 **게시글 생성 및 수정(Title/Content/Image)**
-  - Next.js Image 컴포넌트 이용하여 **자동 이미지 최적화**
- 
+
 ## 트러블 슈팅
