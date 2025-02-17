@@ -29,14 +29,22 @@ const PostCreate = () => {
 
   const createPostMutation = useMutation({
     mutationFn: async (data: PostType) => {
+      const formData = new FormData();
+      const requestData = {
+        title: data.title,
+        content: data.content,
+        category: data.category,
+      };
+
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(requestData)], { type: "application/json" })
+      );
       const response = await authClient(
         "https://front-mission.bigs.or.kr/boards",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+          body: formData,
         }
       );
 
@@ -49,7 +57,15 @@ const PostCreate = () => {
     onSuccess: () => {
       // 게시글 목록 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: ["posts"] });
+      alert("게시글이 등록되었습니다."); // 성공 알림 추가
       form.reset(); // 폼 초기화
+    },
+    onError: (error) => {
+      alert(
+        error instanceof Error
+          ? error.message
+          : "게시글 등록 중 오류가 발생했습니다."
+      );
     },
   });
 

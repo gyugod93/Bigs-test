@@ -22,7 +22,6 @@ const PostList = ({ selectedCategory }: PostListProps) => {
     error,
     fetchNextPage,
     hasNextPage,
-    isFetching,
     isFetchingNextPage,
     status,
     handleSelectPost,
@@ -51,7 +50,13 @@ const PostList = ({ selectedCategory }: PostListProps) => {
   if (status === "pending") return <div>Loading...</div>;
   if (status === "error") return <div>Error: {error?.message}</div>;
 
-  const allPosts = data?.pages.flatMap((page) => page.content) ?? [];
+  const allPosts =
+    data?.pages
+      .flatMap((page) => page.content)
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ) ?? [];
   const posts = selectedCategory
     ? allPosts.filter((post) => post.category === selectedCategory)
     : allPosts;

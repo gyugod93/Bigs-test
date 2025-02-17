@@ -58,7 +58,7 @@ const HomePage = () => {
       <Navbar />
       <div className="p-4">
         <PostCreate />
-        <PostListSection posts={posts} onSelectPost={handleSelectPost} />
+        <PostListSection />
       </div>
     </>
   );
