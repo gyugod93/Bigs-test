@@ -107,6 +107,9 @@ NextJS / Styled-component / React-hook-form / Zod / Zustand / Typescript / Terse
 ## 게시글 CRUD
   - 
 
-## 구현 못한 부분
-
+## 추가적으로 도전할 부분
+  - 페이지네이션(리엑트쿼리의 인피니트 쿼리)
+  - http only 쿠키에 리프레시토큰 + 로컬스토리지 액세스토큰 저징 or axios로 middleware로 토큰 만료 관리
+  - 중복 코드 찾아내서 리펙토링
+  - form input 포커싱 / ssr렌더링 / test코드 적용 / git actions ci/cd 등 적용하기
 ## 트러블 슈팅
