@@ -105,7 +105,7 @@ NextJS / Styled-component / React-hook-form / Zod / Zustand / Typescript / Terse
   - app/route.ts 즉, 넥스트 서버에서 api 엔드포인트 관련 코드 넣어서 클라이언트 측에서 엔드포인트 탈취 관련 보안 강화
 
 ## 게시글 CRUD
-  - 
+  - route.ts에서 api 호출 vs 클라에서 호출
 
 ## 추가적으로 도전할 부분
   - 페이지네이션(리엑트쿼리의 인피니트 쿼리)
