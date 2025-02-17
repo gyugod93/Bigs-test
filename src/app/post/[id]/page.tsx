@@ -21,7 +21,7 @@ const PostDetailPage = () => {
     if (id) {
       fetchPostDetail();
     }
-  }, [id]);
+  }, [fetchPostDetail]);
 
   if (!post) return <div>Loading...</div>;
 

@@ -12,12 +12,7 @@ import {
   ErrorMessage,
   Title,
 } from "@/app/components/common/CommonStyles";
-import {
-  CATEGORIES,
-  CATEGORY_MAP,
-  PostCreateProps,
-} from "@/app/types/post/postTypes";
-import { useCreatePost } from "@/app/hooks/posts/useCreatePost";
+import { CATEGORIES, CATEGORY_MAP } from "@/app/types/post/postTypes";
 import { PostType } from "@/app/utils/validations/schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";

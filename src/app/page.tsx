@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { usePosts } from "./hooks/posts/usePosts";
 import PostListSection from "./components/post/list/PostListSection";
@@ -9,9 +9,8 @@ import PostCreate from "./components/post/create/PostCreate";
 
 const HomePage = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
   const { fetchCategories } = useCategories();
-  const { data, status, error, handleSelectPost } = usePosts();
+  const { data, status, error } = usePosts();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");

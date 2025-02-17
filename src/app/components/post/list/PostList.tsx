@@ -27,7 +27,6 @@ const PostList = ({ selectedCategory }: PostListProps) => {
     handleSelectPost,
   } = usePosts();
 
-  const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

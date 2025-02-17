@@ -1,12 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import PostList from "./PostList";
-import {
-  CATEGORIES,
-  CATEGORY_MAP,
-  PostListProps,
-  PostListSectionProps,
-} from "@/app/types/post/postTypes";
+import { CATEGORIES, CATEGORY_MAP } from "@/app/types/post/postTypes";
 import {
   SectionContainer,
   SectionTitle,
@@ -14,7 +9,6 @@ import {
   Label,
   Select,
 } from "./PostListSection.styles";
-import { usePosts } from "@/app/hooks/posts/usePosts";
 
 const PostListSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
