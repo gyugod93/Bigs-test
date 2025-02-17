@@ -4,6 +4,7 @@ import PostList from "./PostList";
 import {
   CATEGORIES,
   CATEGORY_MAP,
+  PostListProps,
   PostListSectionProps,
 } from "@/app/types/post/postTypes";
 import {
@@ -13,18 +14,21 @@ import {
   Label,
   Select,
 } from "./PostListSection.styles";
+import { usePosts } from "@/app/hooks/posts/usePosts";
 
-const PostListSection = ({ posts, onSelectPost }: PostListSectionProps) => {
+const PostListSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  // const { data, status, error, handleSelectPost } = usePosts();
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = e.target.value === "" ? null : e.target.value;
     setSelectedCategory(categoryId);
   };
 
-  const filteredPosts = selectedCategory
-    ? posts.filter((post) => post.category === selectedCategory)
-    : posts;
+  // if (status === "pending") return <div>Loading...</div>;
+  // if (status === "error") return <div>Error: {error?.message}</div>;
+
+  // const posts = data?.pages.flatMap((page) => page.content);
 
   return (
     <SectionContainer>
@@ -44,7 +48,7 @@ const PostListSection = ({ posts, onSelectPost }: PostListSectionProps) => {
           ))}
         </Select>
       </FilterContainer>
-      <PostList posts={filteredPosts} onSelectPost={onSelectPost} />
+      <PostList selectedCategory={selectedCategory} />
     </SectionContainer>
   );
 };

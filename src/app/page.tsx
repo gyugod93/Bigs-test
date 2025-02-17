@@ -11,7 +11,7 @@ const HomePage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const { fetchCategories } = useCategories();
-  const { posts, addPost, fetchPosts, handleSelectPost } = usePosts();
+  const { data, status, error, handleSelectPost } = usePosts();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -20,29 +20,44 @@ const HomePage = () => {
       return;
     }
 
-    const initializeData = async () => {
-      try {
-        await Promise.all([fetchCategories(), fetchPosts()]);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("데이터 초기화 중 오류:", error);
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        router.push("/login");
-      }
-    };
-    initializeData();
+    // 카테고리만 따로 fetch
+    fetchCategories().catch((error) => {
+      console.error("카테고리 로드 중 오류:", error);
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      router.push("/login");
+    });
+
+    // const initializeData = async () => {
+    //   try {
+    //     await Promise.all([fetchCategories(), fetchPosts()]);
+    //     setIsLoading(false);
+    //   } catch (error) {
+    //     console.error("데이터 초기화 중 오류:", error);
+    //     localStorage.removeItem("access_token");
+    //     localStorage.removeItem("refresh_token");
+    //     router.push("/login");
+    //   }
+    // };
+    // initializeData();
   }, []);
 
-  if (isLoading) {
+  if (status === "pending") {
     return <div>Loading...</div>;
   }
 
+  if (status === "error") {
+    return <div>Error: {error?.message}</div>;
+  }
+
+  // data.pages에서 모든 게시글을 하나의 배열로 변환
+  const posts = data?.pages.flatMap((page) => page.content);
+  console.log("check posts", posts);
   return (
     <>
       <Navbar />
       <div className="p-4">
-        <PostCreate onAddPost={addPost} />
+        <PostCreate />
         <PostListSection posts={posts} onSelectPost={handleSelectPost} />
       </div>
     </>

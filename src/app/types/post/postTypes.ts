@@ -8,9 +8,13 @@ export interface PostProps {
 }
 
 // 컴포넌트 Props 타입들
+// export interface PostListProps {
+//   posts: PostProps[];
+//   onSelectPost: (postId: number) => void;
+// }
+
 export interface PostListProps {
-  posts: PostProps[];
-  onSelectPost: (postId: number) => void;
+  selectedCategory: string | null;
 }
 
 export interface PostListSectionProps {
@@ -65,3 +69,11 @@ export const CATEGORY_MAP = {
 export type CategoryMap = typeof CATEGORY_MAP;
 export type CategoryKey = keyof typeof CATEGORY_MAP;
 export const CATEGORIES = Object.keys(CATEGORY_MAP) as CategoryKey[];
+
+//react infinite query 관련
+export interface PostsResponse {
+  content: PostProps[];
+  last: boolean;
+  totalElements: number;
+  totalPages: number;
+}

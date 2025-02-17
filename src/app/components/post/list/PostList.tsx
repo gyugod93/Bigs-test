@@ -1,4 +1,5 @@
 "use client";
+
 import {
   CATEGORY_MAP,
   CategoryKey,
@@ -12,13 +13,53 @@ import {
   MetaItem,
   MetaValue,
 } from "./PostList.styles";
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { usePosts } from "@/app/hooks/posts/usePosts";
 
-const PostList = ({ posts, onSelectPost }: PostListProps) => {
+const PostList = ({ selectedCategory }: PostListProps) => {
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+    handleSelectPost,
+  } = usePosts();
+
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (status === "pending") return <div>Loading...</div>;
+  if (status === "error") return <div>Error: {error?.message}</div>;
+
+  const allPosts = data?.pages.flatMap((page) => page.content) ?? [];
+  const posts = selectedCategory
+    ? allPosts.filter((post) => post.category === selectedCategory)
+    : allPosts;
+
   return (
     <PostListContainer>
       {posts.map((post) => (
-        <PostItem key={post.id} onClick={() => onSelectPost(post.id)}>
+        <PostItem key={post.id} onClick={() => handleSelectPost(post.id)}>
           <PostTitle>{post.title}</PostTitle>
           <MetaInfo>
             <div>
@@ -36,6 +77,16 @@ const PostList = ({ posts, onSelectPost }: PostListProps) => {
           </MetaInfo>
         </PostItem>
       ))}
+
+      <div ref={loadMoreRef} className="h-20 flex items-center justify-center">
+        {isFetchingNextPage ? (
+          <div>로딩 중...</div>
+        ) : hasNextPage ? (
+          <div>스크롤하여 더 보기</div>
+        ) : (
+          <div>모든 게시글을 불러왔습니다</div>
+        )}
+      </div>
     </PostListContainer>
   );
 };

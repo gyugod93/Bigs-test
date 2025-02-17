@@ -19,12 +19,46 @@ import {
 } from "@/app/types/post/postTypes";
 import { useCreatePost } from "@/app/hooks/posts/useCreatePost";
 import { PostType } from "@/app/utils/validations/schemas";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { authClient } from "@/app/utils/auth/authClient ";
 
-const PostCreate = ({ onAddPost }: PostCreateProps) => {
-  const { form, createPost } = useCreatePost(onAddPost);
+const PostCreate = () => {
+  const queryClient = useQueryClient();
+  const form = useForm<PostType>();
+
+  const createPostMutation = useMutation({
+    mutationFn: async (data: PostType) => {
+      const response = await authClient(
+        "https://front-mission.bigs.or.kr/boards",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to create post");
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      // 게시글 목록 쿼리 무효화
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      form.reset(); // 폼 초기화
+    },
+  });
 
   const handlePost = async (data: PostType) => {
-    await createPost(data);
+    try {
+      await createPostMutation.mutateAsync(data);
+    } catch (error) {
+      console.error("게시글 작성 실패:", error);
+    }
   };
 
   return (
